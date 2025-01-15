@@ -1,7 +1,6 @@
 package archives.tater.phantomstun.mixin;
 
 import archives.tater.phantomstun.Stunnable;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -44,10 +43,8 @@ public abstract class PhantomEntityMixin extends FlyingEntity implements Stunnab
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) return false;
 
-
 		if (source.getAttacker() instanceof LivingEntity livingEntity && livingEntity.disablesShield()) {
 			phantomstun$stunnedTicks = 80;
-			setNoGravity(false);
 			setTarget(null);
 		}
 
@@ -61,20 +58,7 @@ public abstract class PhantomEntityMixin extends FlyingEntity implements Stunnab
 	private void tickStun(CallbackInfo ci) {
         if (phantomstun$stunnedTicks > 0) {
             phantomstun$stunnedTicks--;
-			if (phantomstun$stunnedTicks == 0) {
-				setNoGravity(true);
-			}
 		}
-	}
-
-	@Override
-	protected boolean isImmobile() {
-		return super.isImmobile() && phantomstun$stunnedTicks == 0;
-	}
-
-	@Override
-	public boolean canSee(Entity entity) {
-		return super.canSee(entity) && phantomstun$stunnedTicks == 0;
 	}
 
 	@Override
