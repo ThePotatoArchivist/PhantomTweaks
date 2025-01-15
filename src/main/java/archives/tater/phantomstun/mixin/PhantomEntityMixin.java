@@ -6,6 +6,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.PhantomEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -43,9 +45,9 @@ public abstract class PhantomEntityMixin extends FlyingEntity implements Stunnab
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) return false;
 
-		if (source.getAttacker() instanceof LivingEntity livingEntity && livingEntity.disablesShield()) {
-			phantomstun$stunnedTicks = 80;
-			setTarget(null);
+		// Players are handled separately
+		if ((source.getSource() instanceof LivingEntity livingEntity && !(source.getAttacker() instanceof PlayerEntity) && livingEntity.disablesShield()) || source.getSource() instanceof PersistentProjectileEntity projectile && projectile.isCritical()) {
+			phantomstun$setStunned();
 		}
 
 		return true;
@@ -64,5 +66,11 @@ public abstract class PhantomEntityMixin extends FlyingEntity implements Stunnab
 	@Override
 	public boolean phantomstun$isStunned() {
 		return phantomstun$stunnedTicks > 0;
+	}
+
+	@Override
+	public void phantomstun$setStunned() {
+		phantomstun$stunnedTicks = 80;
+		setTarget(null);
 	}
 }

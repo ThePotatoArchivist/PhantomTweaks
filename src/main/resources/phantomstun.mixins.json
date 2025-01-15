@@ -3,8 +3,10 @@
   "package": "archives.tater.phantomstun.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "FindTargetGoalMixin",
     "PhantomEntityMixin",
-    "PhantomMoveControlMixin"
+    "PhantomMoveControlMixin",
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
