@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "archives.tater.phantomstun.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "FlyingEntityMixin",
+    "PhantomEntityMixin",
+    "PhantomMoveControlMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}
