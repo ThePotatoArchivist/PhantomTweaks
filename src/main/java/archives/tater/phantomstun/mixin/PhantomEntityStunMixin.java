@@ -17,11 +17,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PhantomEntity.class)
-public abstract class PhantomEntityMixin extends FlyingEntity implements Stunnable {
+public abstract class PhantomEntityStunMixin extends FlyingEntity implements Stunnable {
 	@Unique
 	private int phantomstun$stunnedTicks = 0;
 
-	protected PhantomEntityMixin(EntityType<? extends FlyingEntity> entityType, World world) {
+	protected PhantomEntityStunMixin(EntityType<? extends FlyingEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
