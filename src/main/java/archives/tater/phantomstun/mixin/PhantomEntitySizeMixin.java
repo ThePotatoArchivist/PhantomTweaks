@@ -48,6 +48,6 @@ public abstract class PhantomEntitySizeMixin extends LivingEntity {
             at = @At("TAIL")
     )
     private void setMaxHealth(CallbackInfo ci) {
-        requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(20 + 20 * getPhantomSize());
+        requireNonNull(this.getAttributeInstance(EntityAttributes.MAX_HEALTH)).setBaseValue(20 + 20 * getPhantomSize());
     }
 }

@@ -10,6 +10,7 @@ import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -43,8 +44,8 @@ public abstract class PhantomEntityStunMixin extends FlyingEntity implements Stu
 	}
 
 	@Override
-	public boolean damage(DamageSource source, float amount) {
-		if (!super.damage(source, amount)) return false;
+	public boolean damage(ServerWorld serverWorld, DamageSource source, float amount) {
+		if (!super.damage(serverWorld, source, amount)) return false;
 
 		var sourceEntity = source.getSource();
 		if ((sourceEntity != null && sourceEntity.getType().isIn(PhantomStun.ALWAYS_STUN_TAG))
