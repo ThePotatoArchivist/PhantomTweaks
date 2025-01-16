@@ -6,7 +6,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.PhantomEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -40,7 +39,7 @@ public abstract class PhantomEntitySizeMixin extends LivingEntity {
             method = "initialize",
             at = @At("TAIL")
     )
-    private void heal(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityNbt, CallbackInfoReturnable<EntityData> cir) {
+    private void heal(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CallbackInfoReturnable<EntityData> cir) {
         setHealth(getMaxHealth());
     }
 
