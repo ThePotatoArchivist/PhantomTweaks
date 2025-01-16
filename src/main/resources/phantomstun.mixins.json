@@ -10,6 +10,7 @@
     "PhantomSpawnerMixin",
     "PlayerEntityMixin"
   ],
+  "plugin": "archives.tater.phantomstun.PhantomStunMixinConfig",
   "injectors": {
     "defaultRequire": 1
 	}
