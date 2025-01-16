@@ -1,9 +1,7 @@
 package archives.tater.phantomstun.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.spawner.PhantomSpawner;
 import org.objectweb.asm.Opcodes;
@@ -11,7 +9,9 @@ import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PhantomSpawner.class)
 @Debug(export = true)
@@ -29,14 +29,13 @@ public class PhantomSpawnerTimingMixin {
         original.call(instance, cooldown + 15 * 20);
     }
 
-    @ModifyReturnValue(
+    @Inject(
             method = "spawn",
-            at = @At("TAIL")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/LocalDifficulty;getGlobalDifficulty()Lnet/minecraft/world/Difficulty;")
     )
-    private int setCooldown(int original, @Local(argsOnly = true) ServerWorld world) {
+    private void setCooldown(ServerWorld world, boolean spawnMonsters, boolean spawnAnimals, CallbackInfo ci) {
         // No more phantoms for 3-5 minutes
-        if (original > 0)
+        if (cooldown < 180 * 20)
             cooldown = cooldown + (180 + world.random.nextInt(120)) * 20;
-        return original;
     }
 }

@@ -10,6 +10,7 @@ import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -39,18 +40,18 @@ public abstract class PhantomEntityStunMixin extends FlyingEntity implements Stu
 			at = @At("TAIL")
 	)
 	private void readStun(NbtCompound nbt, CallbackInfo ci) {
-		phantomstun$stunnedTicks = nbt.getInt("Stunned");
+		phantomstun$stunnedTicks = nbt.getInt("Stunned", 0);
 	}
 
 	@Override
-	public boolean damage(DamageSource source, float amount) {
-		if (!super.damage(source, amount)) return false;
+	public boolean damage(ServerWorld serverWorld, DamageSource source, float amount) {
+		if (!super.damage(serverWorld, source, amount)) return false;
 
 		var sourceEntity = source.getSource();
 		if (source.isIn(PhantomStun.ALWAYS_STUN_DAMAGE_TAG)
 				|| (sourceEntity != null && sourceEntity.getType().isIn(PhantomStun.ALWAYS_STUN_ENTITY_TAG))
 				// Players are handled separately
-				|| (sourceEntity instanceof LivingEntity livingEntity && !(source.getAttacker() instanceof PlayerEntity) && source.isIn(PhantomStun.MELEE_STUN_TAG) && livingEntity.disablesShield())
+				|| (sourceEntity instanceof LivingEntity livingEntity && !(source.getAttacker() instanceof PlayerEntity) && source.isIn(PhantomStun.MELEE_STUN_TAG) && livingEntity.getWeaponDisableBlockingForSeconds() > 0)
 				|| (sourceEntity instanceof PersistentProjectileEntity projectile && projectile.isCritical())) {
 			phantomstun$setStunned();
 		}
