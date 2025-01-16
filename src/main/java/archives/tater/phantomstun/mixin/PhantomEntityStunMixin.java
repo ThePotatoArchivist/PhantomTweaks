@@ -1,5 +1,6 @@
 package archives.tater.phantomstun.mixin;
 
+import archives.tater.phantomstun.PhantomStun;
 import archives.tater.phantomstun.Stunnable;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -45,8 +46,11 @@ public abstract class PhantomEntityStunMixin extends FlyingEntity implements Stu
 	public boolean damage(DamageSource source, float amount) {
 		if (!super.damage(source, amount)) return false;
 
-		// Players are handled separately
-		if ((source.getSource() instanceof LivingEntity livingEntity && !(source.getAttacker() instanceof PlayerEntity) && livingEntity.disablesShield()) || source.getSource() instanceof PersistentProjectileEntity projectile && projectile.isCritical()) {
+		var sourceEntity = source.getSource();
+		if ((sourceEntity != null && sourceEntity.getType().isIn(PhantomStun.ALWAYS_STUN_TAG))
+				// Players are handled separately
+				|| (sourceEntity instanceof LivingEntity livingEntity && !(source.getAttacker() instanceof PlayerEntity) && source.isIn(PhantomStun.MELEE_STUN_TAG) && livingEntity.disablesShield())
+				|| (sourceEntity instanceof PersistentProjectileEntity projectile && projectile.isCritical())) {
 			phantomstun$setStunned();
 		}
 
