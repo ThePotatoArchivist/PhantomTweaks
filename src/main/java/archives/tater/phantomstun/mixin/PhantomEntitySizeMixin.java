@@ -18,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static java.util.Objects.requireNonNull;
+
 @Mixin(PhantomEntity.class)
 public abstract class PhantomEntitySizeMixin extends LivingEntity {
     @Shadow public abstract int getPhantomSize();
@@ -47,7 +49,6 @@ public abstract class PhantomEntitySizeMixin extends LivingEntity {
             at = @At("TAIL")
     )
     private void setMaxHealth(CallbackInfo ci) {
-        this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(20 + 10 * getPhantomSize());
+        requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(20 + 20 * getPhantomSize());
     }
-
 }

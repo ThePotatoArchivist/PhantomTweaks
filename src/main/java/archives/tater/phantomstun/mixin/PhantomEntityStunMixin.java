@@ -70,7 +70,7 @@ public abstract class PhantomEntityStunMixin extends FlyingEntity implements Stu
 
 	@Override
 	public void phantomstun$setStunned() {
-		phantomstun$stunnedTicks = 80;
+		phantomstun$stunnedTicks = 120;
 		setTarget(null);
 	}
 }
