@@ -2,16 +2,16 @@
 	"schemaVersion": 1,
 	"id": "phantomstun",
 	"version": "${version}",
-	"name": "PhantomStun",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Phantom Tweaks",
+	"description": "Changes phantom mechanics to make them less annoying to fight",
 	"authors": [
-		"Me!"
+		"ThePotatoArchivist"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/phantom-tweaks",
+		"sources": "https://github.com/ThePotatoArchivist/PhantomTweaks"
 	},
-	"license": "CC0-1.0",
+	"license": "LGPL-3.0-or-later",
 	"icon": "assets/phantomstun/icon.png",
 	"environment": "*",
 	"entrypoints": {
