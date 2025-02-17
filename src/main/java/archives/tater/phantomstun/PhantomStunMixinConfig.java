@@ -19,7 +19,9 @@ public class PhantomStunMixinConfig implements IMixinConfigPlugin {
     public void onLoad(String mixinPackage) {
         try {
             CONFIG = new GsonBuilder().create().fromJson(Files.newBufferedReader(FabricLoader.getInstance().getConfigDir().resolve(PhantomStun.MOD_ID + ".json")), Config.class);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+            CONFIG = new Config();
+        }
     }
 
     @Override
