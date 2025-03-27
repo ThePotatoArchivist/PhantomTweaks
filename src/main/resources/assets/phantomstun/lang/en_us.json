@@ -1,7 +1,9 @@
 {
   "phantomstun.midnightconfig.title": "Phantom Stun",
-  "phantomstun.midnightconfig.phantomStun": "Phantom Stunning",
-  "phantomstun.midnightconfig.phantomSizeTweak": "Increase Phantom Size",
-  "phantomstun.midnightconfig.phantomSpawnTweak": "Tweak Phantom Spawns",
+  "phantomstun.midnightconfig.phantomStun": "Phantom stunning",
+  "phantomstun.midnightconfig.phantomSizeTweak": "Increase phantom size",
+  "phantomstun.midnightconfig.phantomSpawnHealthTweak": "Phantoms spawn above low-health players",
+  "phantomstun.midnightconfig.phantomSpawnTimingTweak": "Tweak phantom spawn timing",
+  "phantomstun.midnightconfig.phantomSpawnCountTweak": "Spawn fewer phantoms",
   "phantomstun.midnightconfig.text1": "Restart to apply changes"
 }

@@ -7,7 +7,9 @@
     "PhantomEntitySizeMixin",
     "PhantomEntityStunMixin",
     "PhantomMoveControlMixin",
-    "PhantomSpawnerMixin",
+    "PhantomSpawnerCountMixin",
+    "PhantomSpawnerHealthMixin",
+    "PhantomSpawnerTimingMixin",
     "PlayerEntityMixin"
   ],
   "plugin": "archives.tater.phantomstun.PhantomStunMixinConfig",

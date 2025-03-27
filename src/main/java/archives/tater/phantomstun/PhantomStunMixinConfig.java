@@ -35,7 +35,9 @@ public class PhantomStunMixinConfig implements IMixinConfigPlugin {
         return switch (mixinClassName.substring(MIXIN_PACKAGE_NAME.length())) {
             case "PhantomEntityStunMixin", "FindTargetGoalMixin", "PhantomMoveControlMixin", "PlayerEntityMixin" -> CONFIG.phantomStun;
             case "PhantomEntitySizeMixin" -> CONFIG.phantomSizeTweak;
-            case "PhantomSpawnerMixin" -> CONFIG.phantomSpawnTweak;
+            case "PhantomSpawnerHealthMixin" -> CONFIG.phantomSpawnHealthTweak;
+            case "PhantomSpawnerTimingMixin" -> CONFIG.phantomSpawnTimingTweak;
+            case "PhantomSpawnerCountMixin" -> CONFIG.phantomSpawnCountTweak;
             default -> true;
         };
     }
@@ -64,6 +66,8 @@ public class PhantomStunMixinConfig implements IMixinConfigPlugin {
     public static class Config {
         public boolean phantomStun = true;
         public boolean phantomSizeTweak = true;
-        public boolean phantomSpawnTweak = true;
+        public boolean phantomSpawnHealthTweak = true;
+        public boolean phantomSpawnTimingTweak = true;
+        public boolean phantomSpawnCountTweak = true;
     }
 }

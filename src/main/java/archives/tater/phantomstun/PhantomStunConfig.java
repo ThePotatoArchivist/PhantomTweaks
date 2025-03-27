@@ -6,6 +6,8 @@ import eu.midnightdust.lib.config.MidnightConfig;
 public class PhantomStunConfig extends MidnightConfig {
     @Entry public static boolean phantomStun = true;
     @Entry public static boolean phantomSizeTweak = true;
-    @Entry public static boolean phantomSpawnTweak = true;
+    @Entry public static boolean phantomSpawnHealthTweak = true;
+    @Entry public static boolean phantomSpawnTimingTweak = true;
+    @Entry public static boolean phantomSpawnCountTweak = true;
     @Comment public static Comment text1;
 }
