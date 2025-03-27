@@ -19,7 +19,8 @@ public class PhantomStun implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	public static final TagKey<DamageType> MELEE_STUN_TAG = TagKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(MOD_ID, "melee_stun"));
-	public static final TagKey<EntityType<?>> ALWAYS_STUN_TAG = TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(MOD_ID, "always_stun"));
+	public static final TagKey<DamageType> ALWAYS_STUN_DAMAGE_TAG = TagKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(MOD_ID, "always_stun"));
+	public static final TagKey<EntityType<?>> ALWAYS_STUN_ENTITY_TAG = TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(MOD_ID, "always_stun"));
 
 	@Override
 	public void onInitialize() {

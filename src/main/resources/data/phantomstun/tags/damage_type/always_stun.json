@@ -1,0 +1,13 @@
+{
+  "values": [
+    "minecraft:trident",
+    "minecraft:fireworks",
+    "#minecraft:is_explosion",
+    "minecraft:falling_anvil",
+    "minecraft:falling_block",
+    "minecraft:falling_stalactite",
+    "minecraft:lightning_bolt",
+    "minecraft:sonic_boom",
+    "minecraft:wither_skull"
+  ]
+}

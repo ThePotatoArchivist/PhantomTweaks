@@ -47,7 +47,8 @@ public abstract class PhantomEntityStunMixin extends FlyingEntity implements Stu
 		if (!super.damage(source, amount)) return false;
 
 		var sourceEntity = source.getSource();
-		if ((sourceEntity != null && sourceEntity.getType().isIn(PhantomStun.ALWAYS_STUN_TAG))
+		if (source.isIn(PhantomStun.ALWAYS_STUN_DAMAGE_TAG)
+				|| (sourceEntity != null && sourceEntity.getType().isIn(PhantomStun.ALWAYS_STUN_ENTITY_TAG))
 				// Players are handled separately
 				|| (sourceEntity instanceof LivingEntity livingEntity && !(source.getAttacker() instanceof PlayerEntity) && source.isIn(PhantomStun.MELEE_STUN_TAG) && livingEntity.disablesShield())
 				|| (sourceEntity instanceof PersistentProjectileEntity projectile && projectile.isCritical())) {
