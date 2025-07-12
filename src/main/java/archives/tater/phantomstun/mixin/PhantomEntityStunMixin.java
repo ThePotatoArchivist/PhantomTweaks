@@ -5,12 +5,13 @@ import archives.tater.phantomstun.Stunnable;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.FlyingEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -19,28 +20,28 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PhantomEntity.class)
-public abstract class PhantomEntityStunMixin extends FlyingEntity implements Stunnable {
+public abstract class PhantomEntityStunMixin extends MobEntity implements Stunnable {
 	@Unique
 	private int phantomstun$stunnedTicks = 0;
 
-	protected PhantomEntityStunMixin(EntityType<? extends FlyingEntity> entityType, World world) {
+	protected PhantomEntityStunMixin(EntityType<? extends MobEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Inject(
-			method = "writeCustomDataToNbt",
+			method = "writeCustomData",
 			at = @At("TAIL")
 	)
-	private void writeStun(NbtCompound nbt, CallbackInfo ci) {
-		nbt.putInt("Stunned", phantomstun$stunnedTicks);
+	private void writeStun(WriteView view, CallbackInfo ci) {
+		view.putInt("Stunned", phantomstun$stunnedTicks);
 	}
 
 	@Inject(
-			method = "readCustomDataFromNbt",
+			method = "readCustomData",
 			at = @At("TAIL")
 	)
-	private void readStun(NbtCompound nbt, CallbackInfo ci) {
-		phantomstun$stunnedTicks = nbt.getInt("Stunned", 0);
+	private void readStun(ReadView view, CallbackInfo ci) {
+		phantomstun$stunnedTicks = view.getInt("Stunned", 0);
 	}
 
 	@Override
