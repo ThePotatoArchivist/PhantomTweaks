@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.10-SNAPSHOT'
+	id 'fabric-loom' version '1.11-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -54,7 +54,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation include ("maven.modrinth:midnightlib:${project.midnightlib_version}")
-	modClientRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
+//	modClientRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {
