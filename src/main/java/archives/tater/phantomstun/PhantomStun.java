@@ -2,11 +2,11 @@ package archives.tater.phantomstun;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.EntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +18,9 @@ public class PhantomStun implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static final TagKey<DamageType> MELEE_STUN_TAG = TagKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(MOD_ID, "melee_stun"));
-	public static final TagKey<DamageType> ALWAYS_STUN_DAMAGE_TAG = TagKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(MOD_ID, "always_stun"));
-	public static final TagKey<EntityType<?>> ALWAYS_STUN_ENTITY_TAG = TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(MOD_ID, "always_stun"));
+	public static final TagKey<DamageType> MELEE_STUN_TAG = TagKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "melee_stun"));
+	public static final TagKey<DamageType> ALWAYS_STUN_DAMAGE_TAG = TagKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "always_stun"));
+	public static final TagKey<EntityType<?>> ALWAYS_STUN_ENTITY_TAG = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "always_stun"));
 
 	@Override
 	public void onInitialize() {

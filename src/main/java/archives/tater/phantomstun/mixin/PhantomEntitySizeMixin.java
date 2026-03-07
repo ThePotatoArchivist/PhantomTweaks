@@ -1,14 +1,5 @@
 package archives.tater.phantomstun.mixin;
 
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.PhantomEntity;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,35 +10,45 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static java.util.Objects.requireNonNull;
 
-@Mixin(PhantomEntity.class)
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Phantom;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+
+@Mixin(Phantom.class)
 public abstract class PhantomEntitySizeMixin extends LivingEntity {
     @Shadow public abstract int getPhantomSize();
 
-    protected PhantomEntitySizeMixin(EntityType<? extends LivingEntity> entityType, World world) {
+    protected PhantomEntitySizeMixin(EntityType<? extends LivingEntity> entityType, Level world) {
         super(entityType, world);
     }
 
     @ModifyArg(
-            method = "initialize",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/PhantomEntity;setPhantomSize(I)V")
+            method = "finalizeSpawn",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/Phantom;setPhantomSize(I)V")
     )
     private int defaultSize(int size) {
         return 1;
     }
 
     @Inject(
-            method = "initialize",
+            method = "finalizeSpawn",
             at = @At("TAIL")
     )
-    private void heal(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CallbackInfoReturnable<EntityData> cir) {
+    private void heal(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason spawnReason, SpawnGroupData entityData, CallbackInfoReturnable<SpawnGroupData> cir) {
         setHealth(getMaxHealth());
     }
 
     @Inject(
-            method = "onSizeChanged",
+            method = "updatePhantomSizeInfo",
             at = @At("TAIL")
     )
     private void setMaxHealth(CallbackInfo ci) {
-        requireNonNull(this.getAttributeInstance(EntityAttributes.MAX_HEALTH)).setBaseValue(20 + 20 * getPhantomSize());
+        requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(20 + 20 * getPhantomSize());
     }
 }
