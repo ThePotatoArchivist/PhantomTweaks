@@ -1,10 +1,11 @@
 package archives.tater.phantomstun;
 
-import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+import org.objectweb.asm.tree.ClassNode;
+
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,7 +34,7 @@ public class PhantomStunMixinConfig implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (!mixinClassName.startsWith(MIXIN_PACKAGE_NAME)) return true;
         return switch (mixinClassName.substring(MIXIN_PACKAGE_NAME.length())) {
-            case "PhantomEntityStunMixin", "FindTargetGoalMixin", "PhantomMoveControlMixin", "PlayerEntityMixin" -> CONFIG.phantomStun;
+            case "PhantomEntityStunMixin", "FindTargetGoalMixin", "PhantomMoveControlMixin", "PlayerEntityMixin", "LivingEntityMixin" -> CONFIG.phantomStun;
             case "PhantomEntitySizeMixin" -> CONFIG.phantomSizeTweak;
             case "PhantomSpawnerHealthMixin" -> CONFIG.phantomSpawnHealthTweak;
             case "PhantomSpawnerTimingMixin" -> CONFIG.phantomSpawnTimingTweak;

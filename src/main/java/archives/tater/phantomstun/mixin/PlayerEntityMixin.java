@@ -4,13 +4,17 @@ import archives.tater.phantomstun.Stunnable;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Player.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
@@ -30,5 +34,14 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if (!(target instanceof Stunnable stunnable) || stunnable.phantomstun$isStunned()) return;
 
         stunnable.phantomstun$setStunned();
+    }
+
+    @Inject(
+            method = "stabAttack",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;itemAttackInteraction(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/damagesource/DamageSource;Z)V")
+    )
+    private void kineticStun(EquipmentSlot slot, Entity entity, float damageAmount, boolean damage, boolean knockback, boolean dismount, CallbackInfoReturnable<Boolean> cir) {
+        if (knockback && entity instanceof Stunnable stunnable && !stunnable.phantomstun$isStunned())
+            stunnable.phantomstun$setStunned();
     }
 }
