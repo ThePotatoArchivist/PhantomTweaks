@@ -1,13 +1,15 @@
 package archives.tater.phantomstun;
 
-import eu.midnightdust.lib.config.MidnightConfig;
+import folk.sisby.kaleido.api.WrappedConfig;
+import folk.sisby.kaleido.lib.quiltconfig.api.annotations.ChangeWarning;
+import folk.sisby.kaleido.lib.quiltconfig.api.metadata.ChangeWarning.Type;
 
+@ChangeWarning(Type.RequiresRestart)
 @SuppressWarnings("unused")
-public class PhantomStunConfig extends MidnightConfig {
-    @Entry public static boolean phantomStun = true;
-    @Entry public static boolean phantomSizeTweak = true;
-    @Entry public static boolean phantomSpawnHealthTweak = true;
-    @Entry public static boolean phantomSpawnTimingTweak = true;
-    @Entry public static boolean phantomSpawnCountTweak = true;
-    @Comment public static Comment text1;
+public class PhantomStunConfig extends WrappedConfig {
+    public boolean phantomStun = true;
+    public boolean phantomSizeTweak = true;
+    public boolean phantomSpawnHealthTweak = true;
+    public boolean phantomSpawnTimingTweak = true;
+    public boolean phantomSpawnCountTweak = true;
 }

@@ -1,32 +1,23 @@
 package archives.tater.phantomstun;
 
-import net.fabricmc.loader.api.FabricLoader;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import org.objectweb.asm.tree.ClassNode;
 
-import com.google.gson.GsonBuilder;
+import org.jspecify.annotations.Nullable;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.Set;
 
 public class PhantomStunMixinConfig implements IMixinConfigPlugin {
     public static final String MIXIN_PACKAGE_NAME = PhantomStunMixinConfig.class.getPackageName() + ".mixin.";
-    private static Config CONFIG;
 
     @Override
     public void onLoad(String mixinPackage) {
-        try {
-            CONFIG = new GsonBuilder().create().fromJson(Files.newBufferedReader(FabricLoader.getInstance().getConfigDir().resolve(PhantomStun.MOD_ID + ".json")), Config.class);
-        } catch (IOException ignored) {
-            CONFIG = new Config();
-        }
     }
 
     @Override
-    public String getRefMapperConfig() {
+    public @Nullable String getRefMapperConfig() {
         return null;
     }
 
@@ -34,11 +25,11 @@ public class PhantomStunMixinConfig implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (!mixinClassName.startsWith(MIXIN_PACKAGE_NAME)) return true;
         return switch (mixinClassName.substring(MIXIN_PACKAGE_NAME.length())) {
-            case "PhantomEntityStunMixin", "FindTargetGoalMixin", "PhantomMoveControlMixin", "PlayerEntityMixin", "LivingEntityMixin" -> CONFIG.phantomStun;
-            case "PhantomEntitySizeMixin" -> CONFIG.phantomSizeTweak;
-            case "PhantomSpawnerHealthMixin" -> CONFIG.phantomSpawnHealthTweak;
-            case "PhantomSpawnerTimingMixin" -> CONFIG.phantomSpawnTimingTweak;
-            case "PhantomSpawnerCountMixin" -> CONFIG.phantomSpawnCountTweak;
+            case "PhantomEntityStunMixin", "FindTargetGoalMixin", "PhantomMoveControlMixin", "PlayerEntityMixin", "LivingEntityMixin" -> PhantomStun.CONFIG.phantomStun;
+            case "PhantomEntitySizeMixin" -> PhantomStun.CONFIG.phantomSizeTweak;
+            case "PhantomSpawnerHealthMixin" -> PhantomStun.CONFIG.phantomSpawnHealthTweak;
+            case "PhantomSpawnerTimingMixin" -> PhantomStun.CONFIG.phantomSpawnTimingTweak;
+            case "PhantomSpawnerCountMixin" -> PhantomStun.CONFIG.phantomSpawnCountTweak;
             default -> true;
         };
     }
@@ -63,12 +54,4 @@ public class PhantomStunMixinConfig implements IMixinConfigPlugin {
 
     }
 
-    @SuppressWarnings("FieldMayBeFinal")
-    public static class Config {
-        public boolean phantomStun = true;
-        public boolean phantomSizeTweak = true;
-        public boolean phantomSpawnHealthTweak = true;
-        public boolean phantomSpawnTimingTweak = true;
-        public boolean phantomSpawnCountTweak = true;
-    }
 }
